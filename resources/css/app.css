@@ -1,0 +1,5 @@
+.router-link-active {
+    background-color: lightblue;
+    color: #fff;
+    border-radius: 12px;
+}
