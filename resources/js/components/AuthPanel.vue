@@ -134,7 +134,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 /* .container {
  padding-right: 0;
  margin-right: 0;
