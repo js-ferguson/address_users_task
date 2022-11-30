@@ -9,7 +9,8 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    props: { routeName: 'home' }
+    props: { routeName: 'home' },
+    meta: { requiresGuest: true }
   },
   {
     path: '/signup',
@@ -21,13 +22,28 @@ const routes = [
     path: '/addresses',
     name: 'Addresses',
     component: Addresses,
-    props: { routeName: 'signup' }
+    props: { routeName: 'signup' },
+    meta: { requiresAuth: true }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to, from) => {
+  const authenticated = localStorage.getItem('authenticated')
+
+  if (to.meta.requiresGuest && authenticated) {
+    return {
+      name: 'Addresses'
+    }
+  } else if (to.meta.requiresAuth && !authenticated) {
+    return {
+      name: 'Home'
+    }
+  }
 })
 
 export default router

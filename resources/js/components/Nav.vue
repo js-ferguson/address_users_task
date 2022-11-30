@@ -81,9 +81,10 @@ export default defineComponent({
         },
 
         updateLoggedIn() {
-            localStorage.authenticated === "true"
-                ? (this.loggedIn = true)
-                : (this.loggedIn = false);
+            // localStorage.authenticated === "true"
+            //     ? (this.loggedIn = true)
+            //     : (this.loggedIn = false);
+            this.loggedIn = !this.loggedIn;
         },
     },
 });
