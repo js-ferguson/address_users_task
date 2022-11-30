@@ -31,6 +31,10 @@ Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionControlle
 
 Route::middleware('auth:sanctum')->post('addresses/create', [AddressController::class, 'store']);
 
+Route::middleware('auth:sanctum')->get('addresses/{user_id}', [AddressController::class, 'fetch']);
+
+Route::middleware('auth:sanctum')->post('addresses/update', [AddressController::class, 'update']);
+
 /*
 |--------
 |Public Routes

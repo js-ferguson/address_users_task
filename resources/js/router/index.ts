@@ -22,7 +22,7 @@ const routes = [
     path: '/addresses',
     name: 'Addresses',
     component: Addresses,
-    props: { routeName: 'signup' },
+    props: { routeName: 'Addresses' },
     meta: { requiresAuth: true }
   }
 ]
@@ -36,10 +36,12 @@ router.beforeEach((to, from) => {
   const authenticated = localStorage.getItem('authenticated')
 
   if (to.meta.requiresGuest && authenticated) {
+    console.log('top', authenticated)
     return {
       name: 'Addresses'
     }
   } else if (to.meta.requiresAuth && !authenticated) {
+    console.log('bottom', authenticated)
     return {
       name: 'Home'
     }

@@ -99,7 +99,7 @@ export default defineComponent({
 
     methods: {
         submit() {
-            this.routeName === "home" ? this.login() : this.register();
+            this.routeName === "signup" ? this.register() : this.login();
         },
 
         register() {
@@ -107,6 +107,8 @@ export default defineComponent({
                 .post("/api/register", this.form)
                 .then(() => {
                     this.$router.push({ name: "Addresses" });
+                    localStorage.setItem("authenticated", "true");
+                    this.emitter.emit("update-authenticated");
                 })
                 .catch((error: any) => {
                     this.errors = error.response.data.errors;
@@ -126,7 +128,6 @@ export default defineComponent({
                     
                 })
                 .catch((error: any) => {
-                    console.log(error)
                     this.errors = error.response.data.errors;
                 });
         },
