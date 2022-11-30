@@ -19,28 +19,72 @@
                         <!-- <a class="nav-link active" aria-current="page" href="#"
                             >Home</a
                         > -->
-                        <router-link class="nav-link active" aria-current="home" :to="{name:'Home'}">Home</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{name:'Signup'}">Signup!</router-link>
-                    </li>
-                    
-                    <!-- <li class="nav-item">
-                        <a
-                            class="nav-link disabled"
-                            href="#"
-                            tabindex="-1"
-                            aria-disabled="true"
-                            >Disabled</a
+                        <router-link
+                            class="nav-link active"
+                            aria-current="home"
+                            :to="{ name: 'Home' }"
+                            >Home</router-link
                         >
-                    </li> -->
+                    </li>
+                    <li class="nav-item" v-if="!loggedIn">
+                        <router-link class="nav-link" :to="{ name: 'Signup' }"
+                            >Signup!</router-link
+                        >
+                    </li>
+                    <li class="nav-item" v-if="loggedIn">
+                        <!-- <router-link class="nav-link" :to="{name:'Signup'}">Signup!</router-link> -->
+                        <a
+                            class="nav-link"
+                            @click="logout"
+                            aria-current="page"
+                            href="#"
+                            >Logout</a
+                        >
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 </template>
-<!-- <script>
-export default {
-  name: "Nav",
-};
-</script> -->
+<script lang="ts">
+import axios from "axios";
+import { defineComponent } from "vue";
+export default defineComponent({
+    data() {
+        return {
+            loggedIn: false,
+        };
+    },
+
+    mounted() {
+        this.emitter.on("update-authenticated", () => {
+            this.updateLoggedIn();
+        });
+
+        localStorage.getItem("authenticated")
+            ? (this.loggedIn = true)
+            : (this.loggedIn = false);
+    },
+
+    methods: {
+        logout() {
+            axios
+                .post("/api/logout")
+                .then((response) => {
+                    localStorage.removeItem('authenticated')
+                    this.$router.push({ name: "Home" });
+                    this.emitter.emit("update-authenticated");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+
+        updateLoggedIn() {
+            localStorage.authenticated === "true"
+                ? (this.loggedIn = true)
+                : (this.loggedIn = false);
+        },
+    },
+});
+</script>
