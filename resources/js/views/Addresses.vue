@@ -25,7 +25,11 @@ export default defineComponent({
                 this.user = response.data;
             })
             .catch((error) => {
-                console.log(error);
+                if (error.response.status === 401) {
+                    this.emitter.emit("update-authenticated");
+                    localStorage.removeItem("authenticated");
+                    this.$router.push({ name: "Home" });
+                }
             });
     },
 
@@ -37,7 +41,7 @@ export default defineComponent({
     <div class="container">
         <div class="row">
             <div class="col-12 mt-5">
-                <h2>{{ title }}, {{user.name}}</h2>
+                <h2>{{ title }}, {{ user.name }}</h2>
             </div>
         </div>
     </div>
