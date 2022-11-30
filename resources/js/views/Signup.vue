@@ -1,52 +1,49 @@
-<template>
-    <div class="container">
-        <div class="row justify-content-end align-items-start">
-            <div class="col-sm-3 " id="backend-view">
-                <form>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label"
-                            >Email address</label
-                        >
-                        <input
-                            type="email"
-                            class="form-control"
-                            id="InputEmail"
-                            aria-describedby="emailHelp"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="InputPassword" class="form-label"
-                            >Password</label
-                        >
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="InputPassword1"
-                        />
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        Submit
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</template>
+<script setup lang="ts">
+import AuthPanel from '../components/AuthPanel.vue'
 
-<script>
-export default {};
+defineProps<{
+  routeName;
+}>();
+
 </script>
 
+<script lang="ts">
+import { defineComponent } from 'vue';
+export default defineComponent({});
+</script>
+
+<template>
+    <auth-panel :routeName="routeName"/>
+</template>
+
 <style>
-.container {
+/* .container {
  padding-right: 0;
  margin-right: 0;
+} */
+
+#signin-panel {
+    height: 50vh;
+    background-color: #fff;
+    display: grid;
+    align-items: center;
+    justify-content: right;
+    margin-top: 200px;
+    padding-right: 20px;
+    font-size: 40px;
+    border-top: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
 }
 
 #backend-view {
-    height: 100vh;
+    height: 50vh;
     background-color: #f3f4f6;
     display: grid;
     align-items: center;
+    margin-top: 200px;
+    border-top: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
 }
 </style>
