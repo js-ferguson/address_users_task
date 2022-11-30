@@ -24,9 +24,9 @@ class AddressController extends Controller
         $address = new Address();
         $address->user_id = $user_id;
         $address->line1 = $request->input('line1');
-        $address->line1 = $request->input('line2');
-        $address->line1 = $request->input('line3');
-        $address->line1 = $request->input('line4');
+        $address->line2 = $request->input('line2');
+        $address->line3 = $request->input('line3');
+        $address->line4 = $request->input('line4');
         $address->city = $request->input('city');
         $address->postalCode = $request->input('postalCode');
         $address->countryCode = $request->input('countryCode');
