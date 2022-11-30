@@ -15,10 +15,6 @@ export default defineComponent({
             title: "title"
         }
     },
-
-    methods: {
-
-    }
 });
 </script>
 

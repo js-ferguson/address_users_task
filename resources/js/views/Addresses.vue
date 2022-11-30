@@ -8,10 +8,29 @@ defineProps<{
 
 <template>
     <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-sm-6" id="signin-panel">Add address</div>
-            <div class="col-sm-3" id="backend-view">
-                <form @submit.prevent="submit">
+        <div class="row">
+          
+            <div v-if="addresses.length === 0" class="col-sm-8 signin-panel">
+                <h4>You have no addresses</h4>
+            </div>
+            <div v-else class="col-sm-8 signin-panel">
+                <div v-for="address in addresses" class="address-box" @click='editAddress(address)'>
+                    <span>{{ address.line1 }}</span
+                    ><span v-if="address.line2">{{ `, ${address.line2}` }}</span
+                    ><span v-if="address.line3">{{ `, ${address.line3}` }}</span
+                    ><span v-if="address.line4">{{
+                        `, ${address.line4}`
+                    }}</span>
+                    <div>
+                        {{ address.city }}, {{ address.stateCode }},
+                        {{ !address.stateCode ? `${address.stateName},` : "" }}
+                        {{ address.countryCode }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4" id="backend-view">
+                <div class="mt-5"><h4>{{ edit ? "Edit address" : "Add new address" }}</h4></div>
+                <form @submit.prevent="submit(edit)">
                     <div class="mb-3">
                         <label for="InputLine1" class="form-label"
                             >Address Line 1:</label
@@ -112,7 +131,7 @@ defineProps<{
                         />
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        Submit
+                        {{ edit ? 'Save Changes' : 'Submit' }}
                     </button>
                 </form>
             </div>
@@ -140,6 +159,8 @@ export default defineComponent({
                 stateCode: "",
                 stateName: "",
             },
+            addresses: [],
+            edit: false,
         };
     },
 
@@ -148,6 +169,8 @@ export default defineComponent({
             .get("/api/user")
             .then((response) => {
                 this.user = response.data;
+                this.address.user_id = this.user.id;
+                this.fetch();
             })
             .catch((error) => {
                 if (error.response.status === 401) {
@@ -159,43 +182,85 @@ export default defineComponent({
     },
 
     methods: {
-        submit() {
-            this.address.user_id = this.user.id
-            axios
+        submit(edit) {
+            if (!edit) {
+               axios
                 .post("/api/addresses/create", this.address)
                 .then((response) => {
                     console.log(response);
+                    this.fetch();
+                })
+                .catch((error) => {
+                    console.log(error);
+                }); 
+            } else {
+                console.log(edit)
+                axios
+                .post("/api/addresses/update", this.address)
+                .then((response) => {
+                    console.log(response);
+                    this.edit = false;
+                    this.address = {}
+                    this.fetch();
+                })
+                .catch((error) => {
+                    console.log(error);
+                }); 
+            }
+            
+        },
+
+        fetch() {
+            axios
+                .get("/api/addresses/" + this.user.id)
+                .then((response) => {
+                    console.log(response);
+                    this.addresses = response.data;
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         },
+
+        editAddress(address) {
+            console.log(address)
+            this.edit = true
+            this.address = address
+        },
+
+        update(id) {
+
+        }
+
     },
 });
 </script>
 
-<style>
+<style scoped>
 #backend-view {
     height: 80vh;
     background-color: #f3f4f6;
-    display: grid;
-    align-items: center;
+    /* display: grid; */
+    /* align-items: center; */
     margin-top: 50px;
     border-top: 1px solid lightgrey;
     border-right: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
 }
-#signin-panel {
-    height: 80vh;
-    background-color: #fff;
-    display: grid;
-    align-items: center;
-    justify-content: right;
+.signin-panel {
     margin-top: 50px;
-    padding-right: 20px;
-    font-size: 40px;
+    padding: 25px;
     border-top: 1px solid lightgrey;
     border-left: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
+}
+
+.address-box {
+    border: 1px solid lightgrey;
+    border-radius: 7px;
+    padding: 10px;
+    font-size: 20px;
+    width: 100%;
+    margin-bottom: 10px;
 }
 </style>
