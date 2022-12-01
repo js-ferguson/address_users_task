@@ -2,7 +2,7 @@
 import AuthPanel from '../components/AuthPanel.vue'
 
 defineProps<{
-  routeName;
+  routeName: string;
 }>();
 
 </script>
