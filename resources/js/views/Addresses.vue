@@ -9,12 +9,15 @@ defineProps<{
 <template>
     <div class="container">
         <div class="row">
-          
             <div v-if="addresses.length === 0" class="col-sm-8 signin-panel">
                 <h4>You have no addresses</h4>
             </div>
             <div v-else class="col-sm-8 signin-panel">
-                <div v-for="address in addresses" class="address-box" @click='editAddress(address)'>
+                <div
+                    v-for="address in addresses"
+                    class="address-box"
+                    
+                >
                     <span>{{ address.line1 }}</span
                     ><span v-if="address.line2">{{ `, ${address.line2}` }}</span
                     ><span v-if="address.line3">{{ `, ${address.line3}` }}</span
@@ -25,11 +28,19 @@ defineProps<{
                         {{ address.city }}, {{ address.stateCode }},
                         {{ !address.stateCode ? `${address.stateName},` : "" }}
                         {{ address.countryCode }}
+                        <div>
+                            <button @click="editAddress(address)" class="btn btn-sm btn-primary">Edit</button>
+                            <button @click="deleteAddress(address.id)" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4" id="backend-view">
-                <div class="mt-5"><h4>{{ edit ? "Edit address" : "Add new address" }}</h4></div>
+                <div class="mt-5">
+                    <h4>{{ edit ? "Edit address" : "Add new address" }}</h4>
+                </div>
                 <form @submit.prevent="submit(edit)">
                     <div class="mb-3">
                         <label for="InputLine1" class="form-label"
@@ -131,7 +142,7 @@ defineProps<{
                         />
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        {{ edit ? 'Save Changes' : 'Submit' }}
+                        {{ edit ? "Save Changes" : "Submit" }}
                     </button>
                 </form>
             </div>
@@ -184,30 +195,29 @@ export default defineComponent({
     methods: {
         submit(edit) {
             if (!edit) {
-               axios
-                .post("/api/addresses/create", this.address)
-                .then((response) => {
-                    console.log(response);
-                    this.fetch();
-                })
-                .catch((error) => {
-                    console.log(error);
-                }); 
-            } else {
-                console.log(edit)
                 axios
-                .post("/api/addresses/update", this.address)
-                .then((response) => {
-                    console.log(response);
-                    this.edit = false;
-                    this.address = {}
-                    this.fetch();
-                })
-                .catch((error) => {
-                    console.log(error);
-                }); 
+                    .post("/api/addresses/create", this.address)
+                    .then((response) => {
+                        console.log(response);
+                        this.fetch();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else {
+                console.log(edit);
+                axios
+                    .post("/api/addresses/update", this.address)
+                    .then((response) => {
+                        console.log(response);
+                        this.edit = false;
+                        this.address = {};
+                        this.fetch();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             }
-            
         },
 
         fetch() {
@@ -223,15 +233,22 @@ export default defineComponent({
         },
 
         editAddress(address) {
-            console.log(address)
-            this.edit = true
-            this.address = address
+            console.log(address);
+            this.edit = true;
+            this.address = address;
         },
 
-        update(id) {
-
-        }
-
+        deleteAddress(id) {
+            axios
+                .post("/api/addresses/delete/" + id)
+                .then((response) => {
+                    console.log(response);
+                    this.fetch();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
     },
 });
 </script>

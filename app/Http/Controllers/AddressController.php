@@ -68,4 +68,9 @@ class AddressController extends Controller
 
         return $address->save();
     }
+
+    public function delete($id) {
+        $address = Address::find($id);
+        $address->delete();
+    }
 }
