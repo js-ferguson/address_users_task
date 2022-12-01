@@ -69,6 +69,8 @@ You can now access the application on localhost:8000
 
 There are two sets of tests. One set for the backend and one for the frontend.
 
+For tests to run, both the Laravel and Vue dev servers need to be running
+
 To run the backend tests
 ```
 php artisan test
