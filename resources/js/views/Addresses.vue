@@ -2,7 +2,7 @@
 import AuthPanel from "../components/AuthPanel.vue";
 
 defineProps<{
-    routeName;
+    routeName: string;
 }>();
 </script>
 
@@ -13,6 +13,7 @@ defineProps<{
                 <h4>You have no addresses</h4>
             </div>
             <div v-else class="col-sm-8 signin-panel">
+                <h4 class="mt-4 mb-3">Manage Addresses</h4>
                 <div
                     v-for="address in addresses"
                     class="address-box"

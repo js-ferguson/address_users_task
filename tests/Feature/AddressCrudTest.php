@@ -56,7 +56,6 @@ class AddressCrudTest extends TestCase
 
         $address = Address::factory()->create(['user_id' => $user->id]);
         
-        //$address = Address::find(49);
         $response = $this->actingAs($user)->post('/api/addresses/update', [
             'line1'  => 'test update address',
             'line2' => 'Suite 1',
@@ -70,7 +69,6 @@ class AddressCrudTest extends TestCase
             'id' => $address->id,
         ]);
         $response->assertSessionHasNoErrors();
-        //dd(Address::find($address->id));
         $this->assertEquals('test update address', Address::find($address->id)->line1);
     }
 
