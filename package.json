@@ -9,6 +9,7 @@
     },
     "devDependencies": {
         "@vitest/coverage-c8": "^0.25.3",
+        "@vue/test-utils": "^2.2.4",
         "axios": "^1.1.2",
         "jsdom": "^20.0.3",
         "laravel-vite-plugin": "^0.7.0",
@@ -16,7 +17,7 @@
         "postcss": "^8.1.14",
         "typescript": "^4.9.3",
         "vite": "^3.0.0",
-        "vitest": "^0.25.3",
+        "vitest": "^0.25.3"
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^3.2.0",

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use app\Http\Controllers\AddressController;
 
 class Test extends TestCase
 {
