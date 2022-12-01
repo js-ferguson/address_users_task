@@ -13,5 +13,10 @@ npm 8.11.0
 
 ```
 $ composer install
-npm install
+$ npm install
+```
+
+run database migrations
+```
+php artisan migrate
 ```
