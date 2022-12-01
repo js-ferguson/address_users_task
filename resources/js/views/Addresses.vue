@@ -200,6 +200,7 @@ export default defineComponent({
                     .post("/api/addresses/create", this.address)
                     .then((response) => {
                         console.log(response);
+                        this.address = {};
                         this.fetch();
                     })
                     .catch((error) => {
