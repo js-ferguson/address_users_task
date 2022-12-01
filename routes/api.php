@@ -35,6 +35,8 @@ Route::middleware('auth:sanctum')->get('addresses/{user_id}', [AddressController
 
 Route::middleware('auth:sanctum')->post('addresses/update', [AddressController::class, 'update']);
 
+Route::middleware('auth:sanctum')->post('addresses/delete/{id}', [AddressController::class, 'delete']);
+
 /*
 |--------
 |Public Routes
