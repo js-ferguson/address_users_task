@@ -37,9 +37,9 @@ Sanctum will only attempt to authenticate using cookies when the incoming reques
 
 #### Vitest, jsdom, mitt ####
 
-Vitetest is the "built in" testing framework for vite applications
-Jsdom lets vitetest run in a browser environment rather than it's default node environment
-mitt to impliment an eventbus
+- Vitetest is the "built in" testing framework for vite applications
+- Jsdom lets vitetest run in a browser environment rather than it's default node environment
+- Mitt to impliment an eventbus
 
 ## Setup ##
 
@@ -54,4 +54,29 @@ then
 $ npm install
 ```
 
-## 
+Now you can run the Laravel and Vue Dev servers
+
+```
+$ php artisan serve
+```
+```
+$ npm run dev
+```
+
+You can now access the application on localhost:8000
+
+### Testing ###
+
+There are two sets of tests. One set for the backend and one for the frontend.
+
+To run the backend tests
+```
+php artisan test
+```
+
+To run the frontend tests
+```
+npm run test:unit
+```
+
+The tests are fairly elementary, since I haven't used either of these testing frameworks before. Vitest is immensely powerful and I will be continuing to work on this project to learn to mock API calls and to use other features to test frontend components that it offers
